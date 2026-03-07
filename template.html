@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+
+<style>
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:sans-serif;
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:200px 1fr;
+}
+
+.toc{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:auto;
+  padding:10px;
+  border-right:1px solid #ccc;
+  background:#fafafa;
+}
+
+.toc a{
+  display:block;
+  padding:4px 6px;
+  text-decoration:none;
+  color:#333;
+}
+
+.toc a.active{
+  background:#007acc;
+  color:white;
+}
+
+main{
+  padding:20px;
+}
+
+.case{
+  margin-bottom:80px;
+}
+
+.row2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.row5{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+}
+
+img{
+  width:100%;
+  cursor:pointer;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.8);
+  align-items:center;
+  justify-content:center;
+}
+
+.modal img{
+  max-width:90%;
+  max-height:90%;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<nav class="toc">
+
+{% for c in cases %}
+<a href="#{{c.name}}">{{c.name}}</a>
+{% endfor %}
+
+</nav>
+
+<main>
+
+<h1>Model Comparison</h1>
+
+{% for c in cases %}
+
+<section id="{{c.name}}" class="case">
+
+<h2>{{c.name}}</h2>
+
+<div class="row2">
+<img src="{{c.input}}" loading="lazy">
+<img src="{{c.gt}}" loading="lazy">
+</div>
+
+<div class="row5">
+{% for m in c.models %}
+<img src="{{m}}" loading="lazy">
+{% endfor %}
+</div>
+
+<div class="row5">
+{% for n in c.norms %}
+<img src="{{n}}" loading="lazy">
+{% endfor %}
+</div>
+
+</section>
+
+{% endfor %}
+
+</main>
+
+</div>
+
+<div class="modal" id="modal">
+<img id="modalimg">
+</div>
+
+<script>
+
+/* 画像クリック拡大 */
+
+const modal = document.getElementById("modal")
+const modalimg = document.getElementById("modalimg")
+
+document.querySelectorAll("img").forEach(img=>{
+  img.onclick=()=>{
+    modal.style.display="flex"
+    modalimg.src=img.src
+  }
+})
+
+modal.onclick=()=>{
+  modal.style.display="none"
+}
+
+/* 目次ハイライト */
+
+const links = document.querySelectorAll(".toc a")
+const sections = document.querySelectorAll(".case")
+
+const map = {}
+
+links.forEach(a=>{
+  map[a.getAttribute("href").substring(1)] = a
+})
+
+const observer = new IntersectionObserver(entries=>{
+
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+
+      links.forEach(a=>a.classList.remove("active"))
+
+      const id = e.target.id
+      map[id].classList.add("active")
+
+    }
+  })
+
+},{
+  rootMargin:"-40% 0px -55% 0px"
+})
+
+sections.forEach(s=>observer.observe(s))
+
+</script>
+
+</body>
+</html>
