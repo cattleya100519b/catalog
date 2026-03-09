@@ -1,0 +1,202 @@
+/* =====================================================
+基本設定
+===================================================== */
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:sans-serif;
+}
+
+
+/* =====================================================
+レイアウト
+===================================================== */
+
+.layout{
+  display:grid;
+
+  /* 左：目次 右：コンテンツ */
+  grid-template-columns:200px 1fr;
+}
+
+
+/* =====================================================
+目次
+===================================================== */
+
+.toc{
+
+  position:sticky;
+
+  top:0;
+
+  height:100vh;
+
+  overflow:auto;
+
+  padding:10px;
+
+  border-right:1px solid #ccc;
+
+  background:#fafafa;
+
+}
+
+.toc a{
+
+  display:block;
+
+  padding:4px;
+
+  text-decoration:none;
+
+  color:#333;
+
+}
+
+/* 現在位置 */
+
+.toc a.active{
+
+  background:#007acc;
+
+  color:white;
+
+}
+
+
+/* =====================================================
+メイン
+===================================================== */
+
+main{
+  padding:20px;
+}
+
+.case{
+  margin-bottom:80px;
+}
+
+
+/* =====================================================
+画像グリッド
+===================================================== */
+
+.row2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.row5{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+}
+
+
+/* =====================================================
+画像
+===================================================== */
+
+img{
+
+  width:100%;
+
+  cursor:pointer;
+
+}
+
+.imgbox{
+
+position:relative;
+
+}
+
+.label{
+
+position:absolute;
+
+top:4px;
+left:4px;
+
+background:rgba(0,0,0,0.7);
+
+color:white;
+
+font-size:12px;
+
+padding:2px 6px;
+
+border-radius:4px;
+
+pointer-events:none;
+
+}
+
+/* ホバー拡大 
+
+.row5 img:hover{
+
+  transform:scale(1.8);
+
+  z-index:5;
+
+}*/
+
+
+/* =====================================================
+モーダル
+===================================================== */
+
+#modal{
+
+  display:none;
+
+  position:fixed;
+
+  inset:0;
+
+  background:rgba(0,0,0,0.85);
+
+  align-items:center;
+
+  justify-content:center;
+
+}
+
+#modal img{
+
+  max-width:90%;
+
+  max-height:90%;
+
+  width:auto;
+
+  height:auto;
+
+}
+
+#modalInfo{
+
+color:white;
+
+margin-top:10px;
+
+font-size:14px;
+
+}
+
+/* =====================================================
+コントロール
+===================================================== 
+
+.controls{
+
+  margin-bottom:20px;
+
+}*/
